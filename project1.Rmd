@@ -1,0 +1,120 @@
+---
+title: "Project 1"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+date: "2022-09-19"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+wind_data <- read.csv('project1_data.csv')
+```
+
+# Question 1 
+
+This data set provides the information regarding windmills around the United States.The data was mainly collected using aerial imagery and quality controlled. The data consists of the technical specifications of each turbine (total height, rotor diameter,hub height, swept area, capacity in Megawatts), as well as categorical variables such as the turbine project capacity details by year, physical location, and geographic coordinates. From the dataset, I am going to analyze how the turbine capacity (outcome variable) correlates to the turbine’s total height, rotor diameter, and swept area (predictor variables). The turbine swept area is the area of the circle created by the blades spinning around. This can be calculated by A= pir^2. The larger the area, and the larger the rotor diameters are, the more electricity is produced. The turbine's total height is measured in meters for calculations. The rotor diameter is essentially how long each blade of the turbine is. This is measured in meters, as well. And for my outcome variable, the turbine capacity, it measures the total energy output by the turbine in Kilo-Watts (KWs).
+
+![A picture of several windmills across a plain.](windmill_photoo.png)
+
+[Citatition for Windmill Picture](https://www.shutterstock.com/image-photo/offshore-windmill-farm-ocean-westermeerwind-park-759730900)
+
+
+# Question 2 
+
+Description of graph: This histogram shows my outcome variable, turbine capacities, or overall outputs from the data set, as well as their frequencies. Overall, this seems to be a typically normal centered distribution, but there does seem to be a little bit of a left skew. According to some descriptive statistics, the median is 2000 and the mean is 1945.301, so this also adds to the idea that the distribution is very slightly skewed to the left.
+
+```{r echo=FALSE}
+library(ggplot2)
+bw_ggplot <- ggplot(wind_data)
+bw_ggplot + geom_histogram(aes(x=Turbine.Capacity), binwidth = 200) +ggtitle ('Turbine Capacity vs Frequency')+xlab('Turbine Capacities (KWs)')+ylab('Frequencies') 
+
+```
+```{r echo=FALSE}
+fivenum(wind_data$Turbine.Capacity)
+mean(wind_data$Turbine.Capacity)
+
+```
+
+
+# Question 3
+
+Graph 1
+
+This graph below describes the scatter plot of turbine capacity and turbine swept area. As interpreted from the graph, this relationship shares a very positive, strong correlation. The correlation constant is also .88 and since that number is so close to 1, this indicates a strong correlation. This graph means the bigger the turbine swept area is, the bigger turbine capacity is. This makes sense because when the area is bigger, the turbine produces more energy.
+
+
+```{r echo=FALSE}
+library(ggplot2)
+bw_ggplot <- ggplot(wind_data)
+bw_ggplot + geom_point(aes(x=Turbine.Swept_Area,y=Turbine.Capacity)) + labs(title='Turbine Capacity (KWs) vs Turbine Swept Area (Meters ^2)', x='Turbine Swept Area (Meters ^2)',y='Turbine Capacity (KWs)')
+
+```
+```{r echo=FALSE}
+round(cor(wind_data$Turbine.Swept_Area,wind_data$Turbine.Capacity),2)
+
+```
+
+
+
+Graph 2
+
+The graph below shows the relationship between turbine total height and turbine capacity. This graph also shows a very positive and strong relationship, as depicted by the upward sloping curve. The correlation constant is .84, so that means this has a strong correaltion since it's close to 1. This data means that the longer the turbine is, the more energy the turbine creates.
+
+```{r echo=FALSE}
+bw_ggplot + geom_point(aes(x=Turbine.Total_Height,y=Turbine.Capacity)) + labs(title='Turbine Capacity (KWs) vs Turbine Total Height (Meters)', x='Turbine Total Height (Meters)',y='Turbine Capacity (KWs)')
+
+```
+```{r echo= FALSE}
+round(cor(wind_data$Turbine.Total_Height,wind_data$Turbine.Capacity),2)
+
+```
+
+
+
+Graph 3
+
+This graph below is a scatter plot of the Rotor Diameters and the Turbine Capacities.Once again, this graph portrays a very positive, strong correlation. The correlation constant for this relationship is .88, so this is strong since it's close to 1. This means that if the rotors (blades) are longer, the overall turbine generates more energy.This graph also correlates to the first graph regarding swept area. The rotor diameter adds great significance to the swept area. 
+
+
+```{r echo =FALSE}
+bw_ggplot + geom_point(aes(x=Turbine.Rotor_Diameter,y=Turbine.Capacity)) + labs(title='Turbine Capacity (KWs) vs Rotor Diameters (Meters) ', x='Rotor Diameter (Meters) ',y='Turbine Capacity (KWs)')
+
+```
+
+```{r echo=FALSE}
+round(cor(wind_data$Turbine.Rotor_Diameter,wind_data$Turbine.Capacity),2)
+
+```
+
+
+# Question 4
+
+Write a conclusion that summarizes your findings and suggests areas for future research.
+
+In conclusion, I found out that most of the data regarding windmills, and their capacities have a strong, positive correlation. For example, if the turbine rotor, or blade, is longer, then the overall turbine has a greater capacity and generates more energy.It can also be reasonably inferred from the the data that the windmills operate at an average of 2000KW of energy, and are usually located in the south-central and north-east region of the United States. However, it is not necessarily clear why the windmills are only located in these regions, and not everywhere. Are there certain political and economical reasons, as well aS geographic issues on why these windmills aren't operating everywhere? For future research on this issue, it would be nice to also have values such as the wind pattern, altitude, and climate patterns for the region, to further examine the windmills and their locations.
+
+
+
+
+References:
+
+[1] Ribrant, J. and Bertling, L. M., Survey of Failures in Wind Power Systems with Focus on
+Swedish Wind Power Plants During 1997-2005, IEEE Transactions on Energy Conversion,
+2007, Vol. 22, Iss. 1.
+
+
+[2] Various Authors, Estimation of Turbine Reliability Figures within the DOWEC Project,
+Technical Report 10048/4, Dutch Offshore Wind Energy Converter (DOWEC), 2002.
+
+
+[3] Tavner, P. J., Xiang, J., Spinato, F., Reliability Analysis for Wind Turbines, Wind Energy
+2007 Vol. 10, pp. 1-18.
+
+
+[4] Spinato, F., Tavner, P. J., van Bussel, G. J .W and Koutoulakos, E., Reliability of Wind
+Turbine Subassemblies, IET Renewable Power Generation 2009 Vol. 3, Iss. 4, pp. 387-401.
+
+
