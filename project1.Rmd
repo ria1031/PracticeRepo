@@ -1,5 +1,5 @@
 ---
-title: "Project 1"
+title: "Project 1 Edited by Arjun Rajesh"
 output: 
   html_document:
     toc: true
